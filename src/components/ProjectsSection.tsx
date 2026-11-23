@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight, Layers } from 'lucide-react';
 import { PROJECTS, type ProjectItem } from '../data/portfolioData';
+import { resolveAssetPath } from '../utils/portfolioLogic';
 
 interface ProjectsSectionProps {
   onSelectProject: (project: ProjectItem) => void;
@@ -85,7 +86,7 @@ function TiltProjectCard({ project, featured = false, onSelect }: TiltProjectCar
           >
             {!imageFailed ? (
               <img
-                src={project.image}
+                src={resolveAssetPath(project.image, import.meta.env.BASE_URL)}
                 alt={project.imageAlt}
                 loading="lazy"
                 referrerPolicy="no-referrer"

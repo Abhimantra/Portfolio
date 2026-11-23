@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight, Layers, X } from 'lucide-react';
 import type { ProjectItem } from '../data/portfolioData';
+import { resolveAssetPath } from '../utils/portfolioLogic';
 
 interface ProjectCaseStudyModalProps {
   project: ProjectItem | null;
@@ -81,7 +82,7 @@ export function ProjectCaseStudyModal({
             <div className="relative aspect-[21/9] w-full overflow-hidden bg-[#08090D]">
               {!imageFailed ? (
                 <img
-                  src={project.image}
+                  src={resolveAssetPath(project.image, import.meta.env.BASE_URL)}
                   alt={project.imageAlt}
                   referrerPolicy="no-referrer"
                   onError={() => setImageFailed(true)}

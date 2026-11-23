@@ -214,3 +214,16 @@ export function calculateScrollPercent(progress: number): number {
   if (!Number.isFinite(progress)) return 0;
   return Math.round(Math.min(1, Math.max(0, progress)) * 100);
 }
+
+/**
+ * Prefixes local root-relative asset paths with Vite's BASE_URL so assets resolve
+ * identically on root domains (Vercel/Netlify) and subpath hosts (GitHub Pages).
+ */
+export function resolveAssetPath(assetPath: string, baseUrl = '/'): string {
+  if (/^(https?:|data:|blob:)/i.test(assetPath)) {
+    return assetPath;
+  }
+  const normalizedBase = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+  const cleanAsset = assetPath.replace(/^\/+/, '');
+  return `${normalizedBase}${cleanAsset}`;
+}

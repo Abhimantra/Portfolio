@@ -12,6 +12,7 @@ import {
   generateResumeText,
   getProjectsForTechnology,
   projectPoint3D,
+  resolveAssetPath,
   rotatePoint3D,
   validateContactForm,
 } from './portfolioLogic';
@@ -110,4 +111,23 @@ test('calculateScrollPercent clamps normalized ratios cleanly to 0-100', () => {
   assert.equal(calculateScrollPercent(-0.2), 0);
   assert.equal(calculateScrollPercent(1.4), 100);
   assert.equal(calculateScrollPercent(Number.NaN), 0);
+});
+
+test('resolveAssetPath handles root domains, GitHub Pages subpaths, and external URLs', () => {
+  assert.equal(
+    resolveAssetPath('/src/assets/images/demo.jpg', '/'),
+    '/src/assets/images/demo.jpg',
+  );
+  assert.equal(
+    resolveAssetPath('/src/assets/images/demo.jpg', '/portfolio/'),
+    '/portfolio/src/assets/images/demo.jpg',
+  );
+  assert.equal(
+    resolveAssetPath('/src/assets/images/demo.jpg', '/portfolio'),
+    '/portfolio/src/assets/images/demo.jpg',
+  );
+  assert.equal(
+    resolveAssetPath('https://cdn.example.com/a.jpg', '/portfolio/'),
+    'https://cdn.example.com/a.jpg',
+  );
 });
